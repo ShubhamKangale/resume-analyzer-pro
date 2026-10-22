@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Admin &mdash; AI Resume Analyzer{% endblock %}
+
+{% block content %}
+<section class="wrap">
+  <h1>Admin dashboard</h1>
+
+  <div class="stat-row">
+    <div class="stat"><span class="stat-value">{{ total_users }}</span><span class="stat-label">Registered users</span></div>
+    <div class="stat"><span class="stat-value">{{ total_resumes }}</span><span class="stat-label">Resumes analyzed</span></div>
+    <div class="stat"><span class="stat-value">{{ avg_score }}%</span><span class="stat-label">Average match score</span></div>
+  </div>
+
+  <div class="admin-grid">
+    <div class="admin-col">
+      <h2>Master skills list</h2>
+      <form class="inline-form" method="POST" action="{{ url_for('add_skill') }}">
+        <input type="text" name="skill_name" placeholder="Skill name" required>
+        <input type="text" name="category" placeholder="Category (optional)">
+        <button type="submit" class="btn-primary">Add</button>
+      </form>
+      <ul class="skill-manage-list">
+        {% for skill in skills %}
+        <li>
+          <span>{{ skill.skill_name }}</span>
+          <span class="skill-category">{{ skill.category }}</span>
+          <form method="POST" action="{{ url_for('delete_skill', skill_id=skill.skill_id) }}">
+            <button type="submit" class="btn-text-danger">Remove</button>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="admin-col">
+      <h2>Registered users</h2>
+      <table class="data-table">
+        <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Joined</th></tr></thead>
+        <tbody>
+          {% for u in users %}
+          <tr>
+            <td>{{ u.name }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.role }}</td>
+            <td>{{ u.created_at.strftime('%d %b %Y') }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% endblock %}

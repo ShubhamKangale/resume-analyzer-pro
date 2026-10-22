@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Dashboard &mdash; AI Resume Analyzer{% endblock %}
+
+{% block content %}
+<section class="wrap">
+  <div class="dash-head">
+    <h1>Your dashboard</h1>
+    <a class="btn-primary" href="{{ url_for('upload_page') }}">New analysis</a>
+  </div>
+
+  {% if not history %}
+    <div class="empty-state">
+      <p>No analyses yet. Upload a resume to see your first match score here.</p>
+      <a class="btn-primary" href="{{ url_for('upload_page') }}">Analyze your first resume</a>
+    </div>
+  {% else %}
+
+  {% if latest %}
+  <div class="latest-card">
+    <div class="result-score">
+      <span>{{ latest.match_score }}</span><span class="score-pct">%</span>
+      <p class="score-label">Most recent match score</p>
+    </div>
+    <a class="btn-ghost" href="{{ url_for('download_report', result_id=latest.result_id) }}">Download report</a>
+  </div>
+  {% endif %}
+
+  <h2 class="history-title">History</h2>
+  <table class="data-table">
+    <thead>
+      <tr><th>Resume</th><th>Job title</th><th>Score</th><th>Date</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for row in history %}
+      <tr>
+        <td>{{ row.file_name }}</td>
+        <td>{{ row.jd_title or '\u2014' }}</td>
+        <td class="score-cell {{ 'score-good' if row.match_score >= 60 else 'score-low' }}">{{ row.match_score }}%</td>
+        <td>{{ row.analyzed_at.strftime('%d %b %Y') }}</td>
+        <td><a href="{{ url_for('download_report', result_id=row.result_id) }}">Report</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</section>
+{% endblock %}

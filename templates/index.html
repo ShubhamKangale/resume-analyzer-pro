@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}AI Resume Analyzer &mdash; Know your match score before you apply{% endblock %}
+
+{% block content %}
+<section class="hero wrap">
+  <div class="hero-copy">
+    <h1>Find out what the ATS sees<br><span class="serif">before</span> <mark>the recruiter does.</mark></h1>
+    <p class="hero-sub">
+      Upload your resume, paste a job description, and get a keyword-matched
+      score, a list of what's missing, and specific edits to make &mdash;
+      in under ten seconds.
+    </p>
+    <div class="hero-actions">
+      {% if session.get('user_id') %}
+        <a class="btn-primary btn-lg" href="{{ url_for('upload_page') }}">Analyze a resume</a>
+      {% else %}
+        <a class="btn-primary btn-lg" href="{{ url_for('register') }}">Get started free</a>
+        <a class="btn-ghost btn-lg" href="{{ url_for('login') }}">I have an account</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="hero-visual" aria-hidden="true">
+    <div class="scan-card">
+      <div class="scan-line"></div>
+      <p class="scan-row">Name .......................... found</p>
+      <p class="scan-row">Email ......................... found</p>
+      <p class="scan-row">Skills: Python, MySQL ......... found</p>
+      <p class="scan-row scan-miss">Skills: Docker, AWS ........... missing</p>
+      <p class="scan-row">Experience .................... found</p>
+    </div>
+    <div class="sticker">ATS SCAN</div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true"><div>
+  ATS SCORE<span>&#10022;</span>KEYWORDS<span>&#10022;</span>STAR REWRITER<span>&#10022;</span>LEARNING ROADMAP<span>&#10022;</span>MOCK INTERVIEW<span>&#10022;</span>RED FLAGS<span>&#10022;</span>GITHUB CHECK<span>&#10022;</span>ATS SCORE<span>&#10022;</span>KEYWORDS<span>&#10022;</span>STAR REWRITER<span>&#10022;</span>LEARNING ROADMAP<span>&#10022;</span>MOCK INTERVIEW<span>&#10022;</span>RED FLAGS<span>&#10022;</span>GITHUB CHECK<span>&#10022;</span>
+</div></div>
+
+<section class="wrap steps">
+  <h2>How it works</h2>
+  <ol class="step-list">
+    <li>
+      <span class="step-index">1</span>
+      <div>
+        <h3>Upload your resume</h3>
+        <p>PDF or DOCX. Nothing is shared &mdash; it's parsed straight into your account.</p>
+      </div>
+    </li>
+    <li>
+      <span class="step-index">2</span>
+      <div>
+        <h3>Paste the job description</h3>
+        <p>The exact posting you're applying to, so the score reflects that specific role.</p>
+      </div>
+    </li>
+    <li>
+      <span class="step-index">3</span>
+      <div>
+        <h3>Act on the results</h3>
+        <p>See your match score, missing keywords, and concrete edits &mdash; then download a report.</p>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<section class="wrap feature-grid">
+  <div class="feature">
+    <h3>Keyword &amp; NLP matching</h3>
+    <p>Compares your resume against the job description using a curated skills bank and text analysis, not guesswork.</p>
+  </div>
+  <div class="feature">
+    <h3>Built on real data</h3>
+    <p>Every analysis is stored in MySQL so you can track how your resume improves across versions and roles.</p>
+  </div>
+  <div class="feature">
+    <h3>Plain-language suggestions</h3>
+    <p>No jargon. Just the specific lines worth adding, tightening, or quantifying.</p>
+  </div>
+</section>
+{% endblock %}

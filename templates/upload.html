@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}Analyze your resume &mdash; AI Resume Analyzer{% endblock %}
+
+{% block content %}
+<section class="wrap analyze-wrap">
+  <h1>Analyze your resume</h1>
+  <p class="page-sub">Upload a resume and paste the job description you're targeting.</p>
+
+  <form id="analyzeForm" class="analyze-form">
+    <div class="field-group">
+      <label for="resumeFile">Resume (PDF or DOCX)</label>
+      <div id="dropZone" class="drop-zone">
+        <p id="dropText">Drag &amp; drop your file here, or <span class="link-like">browse</span></p>
+        <input type="file" id="resumeFile" name="resume" accept=".pdf,.docx" required hidden>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label for="jdTitle">Job title (optional)</label>
+      <input type="text" id="jdTitle" name="jd_title" placeholder="e.g. Junior Python Developer">
+    </div>
+
+    <div class="field-group">
+      <label for="jdText">Job description</label>
+      <textarea id="jdText" name="job_description" rows="8" required placeholder="Paste the full job description here..."></textarea>
+    </div>
+
+    <button type="submit" id="analyzeBtn" class="btn-primary btn-lg">Analyze resume</button>
+    <p id="formError" class="form-error" hidden></p>
+  </form>
+
+  <div id="resultPanel" class="result-panel" hidden>
+    <div class="result-score">
+      <span id="scoreValue">0</span><span class="score-pct">%</span>
+      <p class="score-label">Match score</p>
+    </div>
+    <div class="result-lists">
+      <div>
+        <h3>Matched keywords</h3>
+        <ul id="matchedList" class="keyword-list keyword-match"></ul>
+      </div>
+      <div>
+        <h3>Missing keywords</h3>
+        <ul id="missingList" class="keyword-list keyword-miss"></ul>
+      </div>
+    </div>
+    <div class="result-suggestions">
+      <h3>Suggestions</h3>
+      <ul id="suggestionList"></ul>
+    </div>
+    <div id="aiTools" class="ai-tools">
+      <h3>AI career tools</h3>
+      <p class="ai-sub">Run extra AI checks on this resume and job description.</p>
+      <div class="ai-buttons">
+        <button type="button" class="btn-ghost" data-feature="star_rewrite">STAR rewriter</button>
+        <button type="button" class="btn-ghost" data-feature="roadmap">Learning roadmap</button>
+        <button type="button" class="btn-ghost" data-feature="interview">Mock interview</button>
+        <button type="button" class="btn-ghost" data-feature="red_flags">Red flags &amp; buzzwords</button>
+        <button type="button" class="btn-ghost" data-feature="pitch">Elevator pitch</button>
+        <button type="button" class="btn-ghost" data-feature="trap">Interviewer traps</button>
+        <button type="button" class="btn-ghost" data-feature="rejection">Rejection reasons</button>
+        <button type="button" class="btn-ghost" data-feature="projects">Project ideas</button>
+        <button type="button" class="btn-ghost" data-feature="roles">Best-fit roles</button>
+        <button type="button" class="btn-ghost" data-feature="hr_email">HR email draft</button>
+        <button type="button" class="btn-ghost" data-feature="linkedin">LinkedIn headline &amp; About</button>
+        <button type="button" class="btn-ghost" id="voiceBtn">&#127908; Voice interview</button>
+      </div>
+
+      <div class="github-row">
+        <input type="text" id="githubUser" placeholder="GitHub username (e.g. octocat)" autocomplete="off">
+        <button type="button" class="btn-ghost" id="githubBtn">Verify on GitHub</button>
+      </div>
+
+      <div id="aiOutput" class="ai-output" hidden>
+        <div class="ai-output-head">
+          <h4 id="aiOutputTitle"></h4>
+          <button type="button" class="btn-text-danger" id="aiRegenBtn" hidden>Regenerate</button>
+        </div>
+        <p id="aiError" class="form-error" hidden></p>
+        <div id="aiOutputBody"></div>
+      </div>
+    </div>
+
+    <div id="voicePanel" class="voice-panel" hidden>
+      <div class="ai-output-head">
+        <h4>Voice mock interview</h4>
+        <button type="button" class="btn-text-danger" id="voiceCloseBtn">Close</button>
+      </div>
+      <p id="voiceNotice" class="ai-muted"></p>
+      <p id="voiceError" class="form-error" hidden></p>
+      <p id="voiceLoading" class="ai-muted" hidden>Preparing your questions...</p>
+
+      <div id="voiceStage" hidden>
+        <p class="ai-label" id="voiceProgress"></p>
+        <p class="voice-question" id="voiceQuestion"></p>
+
+        <div class="voice-controls">
+          <button type="button" class="btn-ghost" id="voiceSpeakQ">&#128266; Read question</button>
+          <select id="voiceLang" aria-label="Speech language">
+            <option value="en-IN">English (India)</option>
+            <option value="en-US">English (US)</option>
+            <option value="en-GB">English (UK)</option>
+          </select>
+          <button type="button" class="btn-primary" id="voiceMicBtn">&#127908; Start speaking</button>
+        </div>
+
+        <p id="voiceStatus" class="voice-status" hidden></p>
+        <textarea id="voiceAnswer" rows="5" placeholder="Your spoken answer appears here. You can also type or edit it."></textarea>
+
+        <div class="voice-controls">
+          <button type="button" class="btn-primary" id="voiceSubmitBtn">Get feedback</button>
+          <button type="button" class="btn-ghost" id="voiceNextBtn" hidden>Next question</button>
+        </div>
+        <div id="voiceFeedback"></div>
+      </div>
+
+      <div id="voiceSummary" hidden></div>
+    </div>
+
+    <a id="downloadReportBtn" class="btn-ghost" href="#" hidden>Download PDF report</a>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/analyze.js') }}"></script>
+<script src="{{ url_for('static', filename='js/ai_tools.js') }}"></script>
+<script src="{{ url_for('static', filename='js/voice_interview.js') }}"></script>
+{% endblock %}

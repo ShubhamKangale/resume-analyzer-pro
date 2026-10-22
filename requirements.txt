@@ -1,0 +1,8 @@
+Flask==3.0.3
+mysql-connector-python==8.4.0
+Werkzeug==3.0.3
+pdfplumber==0.11.4
+docx2txt==0.8
+fpdf2==2.7.9
+google-genai>=1.0.0
+requests>=2.31.0

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Register &mdash; AI Resume Analyzer{% endblock %}
+
+{% block content %}
+<section class="wrap auth-wrap">
+  <form class="auth-card" method="POST" action="{{ url_for('register') }}" novalidate>
+    <h1>Create your account</h1>
+    <p class="auth-sub">Free. Takes about a minute. We'll email you a link to verify your address.</p>
+
+    <label for="name">Full name</label>
+    <input type="text" id="name" name="name" required autofocus placeholder="Jordan Lee">
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required placeholder="you@example.com">
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required minlength="6" placeholder="At least 6 characters">
+
+    <button type="submit" class="btn-primary btn-block">Create account</button>
+
+    <p class="auth-switch">Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+  </form>
+</section>
+{% endblock %}

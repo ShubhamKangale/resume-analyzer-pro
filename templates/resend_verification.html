@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Verify your email &mdash; AI Resume Analyzer{% endblock %}
+
+{% block content %}
+<section class="wrap auth-wrap">
+  <form class="auth-card" method="POST" action="{{ url_for('resend_verification') }}" novalidate>
+    <h1>Verify your email</h1>
+    <p class="auth-sub">Enter your email and we'll send you a fresh verification link.</p>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required autofocus placeholder="you@example.com">
+
+    <button type="submit" class="btn-primary btn-block">Resend verification email</button>
+
+    <p class="auth-switch">Already verified? <a href="{{ url_for('login') }}">Log in</a></p>
+  </form>
+</section>
+{% endblock %}
