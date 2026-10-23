@@ -6,3 +6,4 @@ docx2txt==0.8
 fpdf2==2.7.9
 google-genai>=1.0.0
 requests>=2.31.0
+gunicorn
